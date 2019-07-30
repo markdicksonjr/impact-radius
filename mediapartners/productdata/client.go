@@ -1,10 +1,8 @@
 package productdata
 
 import (
-	"crypto/tls"
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/markdicksonjr/impact-radius/util"
-	"net/http"
 )
 
 type Client struct {
@@ -13,13 +11,7 @@ type Client struct {
 }
 
 func (i *Client) GetCatalogs() (*CatalogsResponse, error) {
-
-	// request https, allowing for insecure requests
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := retryablehttp.NewClient()
-	client.HTTPClient.Transport = tr
+	client := util.GetDefaultClient()
 
 	url := "https://products.api.impactradius.com/Mediapartners/" + i.SID + "/Catalogs"
 	req, err := retryablehttp.NewRequest("GET", url, nil)
@@ -44,13 +36,7 @@ func (i *Client) GetCatalogs() (*CatalogsResponse, error) {
 }
 
 func (i *Client) GetCatalogItems(id string) (*CatalogItemsResponse, error) {
-
-	// request https, allowing for insecure requests
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := retryablehttp.NewClient()
-	client.HTTPClient.Transport = tr
+	client := util.GetDefaultClient()
 
 	url := "https://products.api.impactradius.com/Mediapartners/" + i.SID + "/Catalogs/" + id + "/Items"
 	req, err := retryablehttp.NewRequest("GET", url, nil)
