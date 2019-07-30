@@ -1,4 +1,4 @@
-package impact_radius
+package productdata
 
 import (
 	"os"

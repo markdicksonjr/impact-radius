@@ -1,11 +1,9 @@
-package impact_radius
+package productdata
 
 import (
 	"crypto/tls"
-	"encoding/json"
-	"errors"
 	"github.com/hashicorp/go-retryablehttp"
-	"io/ioutil"
+	"github.com/markdicksonjr/impact-radius/util"
 	"net/http"
 )
 
@@ -36,18 +34,9 @@ func (i *Client) GetCatalogs() (*CatalogsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		return nil, errors.New("failed impactradius request")
-	}
-
-	responseData, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil, err
-	}
 
 	catalogsResponse := CatalogsResponse{}
-	if err := json.Unmarshal(responseData, &catalogsResponse); err != nil {
+	if err := util.HandleResponse(res, &catalogsResponse); err != nil {
 		return nil, err
 	}
 
@@ -76,18 +65,9 @@ func (i *Client) GetCatalogItems(id string) (*CatalogItemsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
-	if res.StatusCode != 200 {
-		return nil, errors.New("failed impactradius request")
-	}
-
-	responseData, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil, err
-	}
 
 	catalogItemsResponse := CatalogItemsResponse{}
-	if err := json.Unmarshal(responseData, &catalogItemsResponse); err != nil {
+	if err := util.HandleResponse(res, &catalogItemsResponse); err != nil {
 		return nil, err
 	}
 

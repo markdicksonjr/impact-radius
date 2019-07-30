@@ -1,4 +1,4 @@
-package impact_radius
+package productdata
 
 type PageInfo struct {
 	Start           string `json:"@start"`
