@@ -14,8 +14,17 @@ type PageInfo struct {
 	PreviousPageUri string `json:"@previouspageuri"`
 }
 
+type RateLimitInfo struct {
+	Remaining           string
+	Reset               string
+	ConcurrentLimit     string
+	Limit               string
+	ConcurrentRemaining string
+}
+
 type CatalogsResponse struct {
 	PageInfo
+	RateLimitInfo
 	Catalogs []CatalogInfo
 }
 
@@ -35,6 +44,7 @@ type CatalogInfo struct {
 
 type CatalogItemsResponse struct {
 	PageInfo
+	RateLimitInfo
 	Items []ItemInfo
 }
 
