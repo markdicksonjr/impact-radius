@@ -21,7 +21,7 @@ func HandleResponse(res *http.Response, objs ...interface{}) (http.Header, error
 
 		// if there are no instances to unmarshal into, return now
 		if len(objs) == 0 {
-			if res.StatusCode != 200 {
+			if res.StatusCode / 100 != 2 {
 				return res.Header, errors.New("failed impactradius request, status code = " + strconv.Itoa(res.StatusCode))
 			}
 
@@ -29,9 +29,11 @@ func HandleResponse(res *http.Response, objs ...interface{}) (http.Header, error
 		}
 
 		// unmarshal into each inbound instance
-		for i := range objs {
-			if err := json.Unmarshal(responseData, objs[i]); err != nil {
-				return res.Header, err
+		if len(responseData) > 0 {
+			for i := range objs {
+				if err := json.Unmarshal(responseData, objs[i]); err != nil {
+					return res.Header, err
+				}
 			}
 		}
 	}

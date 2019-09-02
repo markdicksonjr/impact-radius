@@ -1,4 +1,4 @@
-package mediapartners
+package v11
 
 type CompanyInfoResponse struct {
 	CompanyName                 string
@@ -9,10 +9,10 @@ type CompanyInfoResponse struct {
 	PrimaryPhoneNumberCountry   string
 	SecondaryPhoneNumber        string
 	SecondaryPhoneNumberCountry string
-	MinimumContactRating        int
+	MinimumContactRating        string
 	Timezone                    string
 	Currency                    string
-	RegisteredForIndirectTax    bool
+	RegisteredForIndirectTax    string
 	IndirectTaxNumber           string
 	OrganizationType            string
 	EinSsnForeignTaxId          string
@@ -34,7 +34,7 @@ type Address struct {
 }
 
 type Contact struct {
-	UserId                 int
+	UserId                 string
 	Name                   string
 	Email                  string
 	WorkPhoneNumber        string

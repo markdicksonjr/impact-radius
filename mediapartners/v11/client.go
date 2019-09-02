@@ -1,4 +1,4 @@
-package mediapartners
+package v11
 
 import (
 	"github.com/hashicorp/go-retryablehttp"
@@ -13,7 +13,7 @@ type Client struct {
 func (i *Client) GetCompanyInformation() (*CompanyInfoResponse, error) {
 	client := util.GetDefaultClient()
 
-	url := "https://products.api.impactradius.com/Mediapartners/" + i.SID + "/CompanyInformation"
+	url := "https://api.impactradius.com/Mediapartners/" + i.SID + "/CompanyInformation"
 	req, err := retryablehttp.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -28,8 +28,11 @@ func (i *Client) GetCompanyInformation() (*CompanyInfoResponse, error) {
 	}
 
 	companyInfoResponse := CompanyInfoResponse{}
-	if err := util.HandleResponse(res, &companyInfoResponse); err != nil {
+	if h, err := util.HandleResponse(res, &companyInfoResponse); err != nil {
 		return nil, err
+	} else {
+		_ = h
+
 	}
 
 	return &companyInfoResponse, nil
